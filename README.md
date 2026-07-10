@@ -1,0 +1,2 @@
+# aplikasi-novel
+tempat galau
