@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Penulis - Ceritaku</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b1118;
+      --bg-soft:#111926;
+      --card:#141f2c;
+      --card-2:#1b2736;
+      --text:#eef5ff;
+      --muted:#9eb0c8;
+      --line:rgba(255,255,255,.08);
+      --primary:#00d564;
+      --primary-dark:#00b454;
+      --danger:#ff5f6d;
+      --shadow:0 18px 45px rgba(0,0,0,.35);
+      --radius:26px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    body{
+      background:
+        radial-gradient(circle at top left, rgba(0,213,100,.12), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(60,120,255,.10), transparent 25%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      padding:18px;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:950px;
+      margin:0 auto;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .brand-logo{
+      width:54px;
+      height:54px;
+      border-radius:18px;
+      background:linear-gradient(135deg,var(--primary),#00ff9d);
+      color:#071a10;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      font-size:1.2rem;
+      box-shadow:0 14px 30px rgba(0,213,100,.22);
+    }
+
+    .brand h1{
+      font-size:1.2rem;
+      margin-bottom:3px;
+    }
+
+    .brand p{
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:none;
+      cursor:pointer;
+      padding:12px 18px;
+      border-radius:16px;
+      font-weight:700;
+      transition:.25s;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--primary),#00ef90);
+      color:#08160d;
+      box-shadow:0 14px 28px rgba(0,213,100,.22);
+    }
+
+    .btn-soft{
+      background:var(--card);
+      color:var(--text);
+      border:1px solid var(--line);
+    }
+
+    .hero{
+      background:linear-gradient(180deg,var(--card),var(--card-2));
+      border:1px solid var(--line);
+      border-radius:30px;
+      padding:24px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      width:180px;
+      height:180px;
+      border-radius:50%;
+      background:rgba(0,213,100,.10);
+      top:-70px;
+      right:-60px;
+      filter:blur(8px);
+    }
+
+    .hero h2{
+      font-size:1.8rem;
+      margin-bottom:8px;
+      position:relative;
+      z-index:2;
+    }
+
+    .hero p{
+      color:var(--muted);
+      line-height:1.8;
+      max-width:700px;
+      position:relative;
+      z-index:2;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:18px;
+    }
+
+    .card{
+      background:linear-gradient(180deg,var(--card),var(--card-2));
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .card h3{
+      margin-bottom:16px;
+      font-size:1.2rem;
+    }
+
+    .form-group{
+      margin-bottom:15px;
+    }
+
+    .form-group label{
+      display:block;
+      margin-bottom:8px;
+      font-size:.95rem;
+      font-weight:600;
+      color:#dce8f7;
+    }
+
+    .input,
+    .textarea,
+    .select{
+      width:100%;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      color:var(--text);
+      border-radius:16px;
+      padding:14px 15px;
+      outline:none;
+      font-size:1rem;
+      transition:.25s;
+    }
+
+    .textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    .textarea.big{
+      min-height:220px;
+    }
+
+    .input:focus,
+    .textarea:focus,
+    .select:focus{
+      border-color:rgba(0,213,100,.45);
+      box-shadow:0 0 0 4px rgba(0,213,100,.08);
+    }
+
+    .hint{
+      margin-top:7px;
+      color:var(--muted);
+      font-size:.84rem;
+      line-height:1.5;
+    }
+
+    .preview-card{
+      border-radius:24px;
+      overflow:hidden;
+      background:#0f1722;
+      border:1px solid var(--line);
+      margin-bottom:16px;
+    }
+
+    .preview-cover{
+      height:220px;
+      background:linear-gradient(135deg,#00d564,#0e3d2a);
+      position:relative;
+      display:flex;
+      align-items:flex-end;
+      padding:18px;
+    }
+
+    .preview-badge{
+      position:absolute;
+      top:14px;
+      left:14px;
+      background:#fff;
+      color:#111;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:.8rem;
+      font-weight:700;
+    }
+
+    .preview-title{
+      font-size:1.4rem;
+      font-weight:800;
+      max-width:80%;
+      line-height:1.25;
+    }
+
+    .preview-body{
+      padding:16px;
+    }
+
+    .preview-meta{
+      color:var(--primary);
+      font-weight:600;
+      margin-bottom:10px;
+      font-size:.95rem;
+    }
+
+    .preview-desc{
+      color:var(--muted);
+      line-height:1.8;
+      font-size:.95rem;
+    }
+
+    .list{
+      display:grid;
+      gap:12px;
+      margin-top:14px;
+      max-height:520px;
+      overflow:auto;
+      padding-right:4px;
+    }
+
+    .story-item{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .story-item h4{
+      margin-bottom:6px;
+      font-size:1rem;
+    }
+
+    .story-item p{
+      color:var(--muted);
+      font-size:.92rem;
+      line-height:1.6;
+    }
+
+    .story-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .mini-btn{
+      border:none;
+      cursor:pointer;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:700;
+      font-size:.9rem;
+    }
+
+    .mini-edit{
+      background:#f7b731;
+      color:#111;
+    }
+
+    .mini-delete{
+      background:#ff5c6c;
+      color:#fff;
+    }
+
+    .empty{
+      color:var(--muted);
+      line-height:1.8;
+      font-size:.95rem;
+      background:rgba(255,255,255,.03);
+      border:1px dashed var(--line);
+      padding:18px;
+      border-radius:18px;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:24px;
+      transform:translateX(-50%) translateY(20px);
+      background:#101822;
+      color:#fff;
+      padding:14px 18px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:var(--shadow);
+      opacity:0;
+      pointer-events:none;
+      transition:.3s ease;
+      z-index:999;
+      width:min(92%,430px);
+      text-align:center;
+      font-size:.94rem;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    @media (max-width:900px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:520px){
+      body{
+        padding:14px;
+      }
+
+      .hero h2{
+        font-size:1.45rem;
+      }
+
+      .card{
+        padding:18px;
+        border-radius:24px;
+      }
+
+      .preview-cover{
+        height:200px;
+      }
+
+      .preview-title{
+        font-size:1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-logo">C</div>
+        <div>
+          <h1>Panel Penulis Ceritaku</h1>
+          <p>Tulis, simpan, dan terbitkan ceritamu ke halaman utama</p>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="btn btn-soft" id="backHome">Kembali ke Beranda</button>
+        <button class="btn btn-primary" id="publishTop">Terbitkan Cerita</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <h2>Tulis cerita seperti platform novel modern</h2>
+      <p>
+        Di sini kamu bisa membuat cerita baru untuk Ceritaku. Setelah diterbitkan,
+        cerita akan disimpan ke localStorage dan bisa ditampilkan otomatis di halaman utama.
+      </p>
+    </section>
+
+    <div class="layout">
+      <!-- FORM -->
+      <div class="card">
+        <h3>Tulis Cerita Baru</h3>
+
+        <div class="form-group">
+          <label for="storyTitle">Judul Cerita</label>
+          <input type="text" id="storyTitle" class="input" placeholder="Contoh: Hujan di Balik Jendela" />
+        </div>
+
+        <div class="form-group">
+          <label for="storyGenre">Genre</label>
+          <select id="storyGenre" class="select">
+            <option value="">Pilih genre</option>
+            <option>Romance</option>
+            <option>Drama</option>
+            <option>Horor</option>
+            <option>Misteri</option>
+            <option>Fantasi</option>
+            <option>Slice of Life</option>
+            <option>Thriller</option>
+            <option>Sci-Fi</option>
+            <option>Aksi</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="storyEpisodes">Jumlah Episode</label>
+          <input type="number" id="storyEpisodes" class="input" placeholder="Contoh: 12" min="1" />
+        </div>
+
+        <div class="form-group">
+          <label for="storyDesc">Deskripsi Singkat</label>
+          <textarea id="storyDesc" class="textarea" placeholder="Tulis ringkasan singkat ceritamu..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="storyContent">Isi Episode Pertama</label>
+          <textarea id="storyContent" class="textarea big" placeholder="Tulis isi cerita episode pertama di sini..."></textarea>
+          <div class="hint">
+            Isi ini nanti bisa dibuka saat pembaca menekan tombol <b>Baca</b> di halaman utama.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="storyCover">URL Gambar Cover (opsional)</label>
+          <input type="text" id="storyCover" class="input" placeholder="https://..." />
+          <div class="hint">
+            Kalau kosong, sistem akan memakai cover gradasi otomatis.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="storyBadge">Label Kecil di Cover</label>
+          <input type="text" id="storyBadge" class="input" placeholder="Contoh: New / Trending / Horor" />
+        </div>
+
+        <div class="form-group">
+          <label for="storyAuthor">Nama Penulis</label>
+          <input type="text" id="storyAuthor" class="input" placeholder="Nama penulis" />
+        </div>
+
+        <button class="btn btn-primary" id="publishBtn" style="width:100%;">Terbitkan Sekarang</button>
+      </div>
+
+      <!-- PREVIEW + LIST -->
+      <div class="card">
+        <h3>Preview Cerita</h3>
+
+        <div class="preview-card">
+          <div class="preview-cover" id="previewCover">
+            <span class="preview-badge" id="previewBadge">Preview</span>
+            <div class="preview-title" id="previewTitle">Judul ceritamu akan tampil di sini</div>
+          </div>
+          <div class="preview-body">
+            <div class="preview-meta" id="previewMeta">Genre • 0 Episode • Penulis</div>
+            <div class="preview-desc" id="previewDesc">
+              Deskripsi singkat ceritamu akan muncul di sini agar kamu bisa melihat gambaran tampilannya sebelum diterbitkan.
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:8px;">Cerita yang Sudah Diterbitkan</h3>
+        <div class="list" id="publishedList">
+          <div class="empty">Belum ada cerita yang diterbitkan.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const storyTitle = document.getElementById("storyTitle");
+    const storyGenre = document.getElementById("storyGenre");
+    const storyEpisodes = document.getElementById("storyEpisodes");
+    const storyDesc = document.getElementById("storyDesc");
+    const storyContent = document.getElementById("storyContent");
+    const storyCover = document.getElementById("storyCover");
+    const storyBadge = document.getElementById("storyBadge");
+    const storyAuthor = document.getElementById("storyAuthor");
+
+    const previewTitle = document.getElementById("previewTitle");
+    const previewMeta = document.getElementById("previewMeta");
+    const previewDesc = document.getElementById("previewDesc");
+    const previewCover = document.getElementById("previewCover");
+    const previewBadge = document.getElementById("previewBadge");
+
+    const publishBtn = document.getElementById("publishBtn");
+    const publishTop = document.getElementById("publishTop");
+    const publishedList = document.getElementById("publishedList");
+    const toast = document.getElementById("toast");
+    const backHome = document.getElementById("backHome");
+
+    let editId = null;
+
+    function showToast(message){
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2500);
+    }
+
+    function getStories(){
+      return JSON.parse(localStorage.getItem("ceritaku_custom_stories")) || [];
+    }
+
+    function saveStories(data){
+      localStorage.setItem("ceritaku_custom_stories", JSON.stringify(data));
+    }
+
+    function updatePreview(){
+      const title = storyTitle.value.trim() || "Judul ceritamu akan tampil di sini";
+      const genre = storyGenre.value || "Genre";
+      const eps = storyEpisodes.value || "0";
+      const desc = storyDesc.value.trim() || "Deskripsi singkat ceritamu akan muncul di sini agar kamu bisa melihat gambaran tampilannya sebelum diterbitkan.";
+      const author = storyAuthor.value.trim() || "Penulis";
+      const badge = storyBadge.value.trim() || "Preview";
+      const cover = storyCover.value.trim();
+
+      previewTitle.textContent = title;
+      previewMeta.textContent = `${genre} • ${eps} Episode • ${author}`;
+      previewDesc.textContent = desc;
+      previewBadge.textContent = badge;
+
+      if(cover){
+        previewCover.style.background = `linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.45)), url('${cover}') center/cover`;
+      } else {
+        previewCover.style.background = "linear-gradient(135deg,#00d564,#0e3d2a)";
+      }
+    }
+
+    [
+      storyTitle, storyGenre, storyEpisodes, storyDesc,
+      storyContent, storyCover, storyBadge, storyAuthor
+    ].forEach(el => {
+      el.addEventListener("input", updatePreview);
+      el.addEventListener("change", updatePreview);
+    });
+
+    function resetForm(){
+      storyTitle.value = "";
+      storyGenre.value = "";
+      storyEpisodes.value = "";
+      storyDesc.value = "";
+      storyContent.value = "";
+      storyCover.value = "";
+      storyBadge.value = "";
+      storyAuthor.value = "";
+      editId = null;
+      publishBtn.textContent = "Terbitkan Sekarang";
+      publishTop.textContent = "Terbitkan Cerita";
+      updatePreview();
+    }
+
+    function publishStory(){
+      const title = storyTitle.value.trim();
+      const genre = storyGenre.value.trim();
+      const episodes = storyEpisodes.value.trim();
+      const desc = storyDesc.value.trim();
+      const content = storyContent.value.trim();
+      const cover = storyCover.value.trim();
+      const badge = storyBadge.value.trim() || "Baru";
+      const author = storyAuthor.value.trim() || "Penulis";
+
+      if(!title || !genre || !episodes || !desc || !content){
+        showToast("Isi judul, genre, episode, deskripsi, dan isi cerita dulu.");
+        return;
+      }
+
+      const stories = getStories();
+
+      if(editId){
+        const index = stories.findIndex(item => item.id === editId);
+        if(index !== -1){
+          stories[index] = {
+            ...stories[index],
+            title,
+            genre,
+            episodes,
+            desc,
+            content,
+            cover,
+            badge,
+            author
+          };
+          saveStories(stories);
+          renderPublishedStories();
+          resetForm();
+          showToast("Cerita berhasil diperbarui.");
+          return;
+        }
+      }
+
+      const newStory = {
+        id: "story_" + Date.now(),
+        title,
+        genre,
+        episodes,
+        desc,
+        content,
+        cover,
+        badge,
+        author,
+        readers: Math.floor(Math.random() * 9000) + 1000,
+        rating: (4 + Math.random()).toFixed(1)
+      };
+
+      stories.unshift(newStory);
+      saveStories(stories);
+      renderPublishedStories();
+      resetForm();
+      showToast("Cerita berhasil diterbitkan ke Ceritaku!");
+    }
+
+    function renderPublishedStories(){
+      const stories = getStories();
+
+      if(stories.length === 0){
+        publishedList.innerHTML = `<div class="empty">Belum ada cerita yang diterbitkan.</div>`;
+        return;
+      }
+
+      publishedList.innerHTML = stories.map(story => `
+        <div class="story-item">
+          <h4>${story.title}</h4>
+          <p>${story.genre} • ${story.episodes} Episode • ${story.author}</p>
+          <p style="margin-top:8px;">${story.desc}</p>
+          <div class="story-actions">
+            <button class="mini-btn mini-edit" onclick="editStory('${story.id}')">Edit</button>
+            <button class="mini-btn mini-delete" onclick="deleteStory('${story.id}')">Hapus</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    window.editStory = function(id){
+      const stories = getStories();
+      const story = stories.find(item => item.id === id);
+      if(!story) return;
+
+      editId = id;
+      storyTitle.value = story.title || "";
+      storyGenre.value = story.genre || "";
+      storyEpisodes.value = story.episodes || "";
+      storyDesc.value = story.desc || "";
+      storyContent.value = story.content || "";
+      storyCover.value = story.cover || "";
+      storyBadge.value = story.badge || "";
+      storyAuthor.value = story.author || "";
+
+      publishBtn.textContent = "Simpan Perubahan";
+      publishTop.textContent = "Simpan Cerita";
+      updatePreview();
+      showToast("Mode edit aktif.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    window.deleteStory = function(id){
+      const ok = confirm("Hapus cerita ini?");
+      if(!ok) return;
+
+      let stories = getStories();
+      stories = stories.filter(item => item.id !== id);
+      saveStories(stories);
+      renderPublishedStories();
+
+      if(editId === id){
+        resetForm();
+      }
+
+      showToast("Cerita berhasil dihapus.");
+    }
+
+    publishBtn.addEventListener("click", publishStory);
+    publishTop.addEventListener("click", publishStory);
+
+    backHome.addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+
+    updatePreview();
+    renderPublishedStories();
+  </script>
+</body>
+</html>
